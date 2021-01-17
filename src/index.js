@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TodoList from './TodoList';
+import App from './App';
+import { GlobalIconStyles } from './statics/iconfont/iconfont-css';
+import { GlobalStyles } from './style.js';
+
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <TodoList />
+    <GlobalStyles/>
+    <GlobalIconStyles/>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
