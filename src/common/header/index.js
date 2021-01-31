@@ -43,7 +43,7 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    focused: state.focused       // reflect data in state to props of current component
+    focused: state.header.focused       // reflect data in state to props of current component
   }
 }
 
