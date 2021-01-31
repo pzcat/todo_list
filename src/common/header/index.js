@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group'
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Btn, SearchWrapper } from './style';
+import { actionCreators } from './store';
 
 
 const Header = (props) => {
@@ -50,16 +51,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputFocus() {
-      const action = {
-        type: 'search_focus'
-      };
+      const action = actionCreators.searchFocus();
       dispatch(action);
     },
     handleInputBlur() {
-      const action = {
-        type: 'search_blur'
-      };
-      dispatch(action);
+      dispatch(actionCreators.searchBlur());
     }
   }
 }
