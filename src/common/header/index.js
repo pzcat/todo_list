@@ -1,12 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group'
-import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Btn, SearchWrapper } from './style';
+import {
+  HeaderWrapper,
+  Logo,
+  Nav,
+  NavItem,
+  NavSearch,
+  Addition,
+  Btn,
+  SearchWrapper,
+  SearchInfo,
+  SearchInfoTitle,
+  SearchInfoSwitch,
+  SearchInfoItem,
+  SearchInfoBox } from './style';
 import { actionCreators } from './store';
 
 
+const showSearchInfoBox = (show) => {
+  if (show) {
+    return (
+      <SearchInfo>
+        <SearchInfoTitle>
+          hot spot
+          <SearchInfoSwitch>switch</SearchInfoSwitch>
+        </SearchInfoTitle>
+        <SearchInfoBox>
+          <SearchInfoItem>music</SearchInfoItem>
+          <SearchInfoItem>plants</SearchInfoItem>
+          <SearchInfoItem>pets</SearchInfoItem>
+          <SearchInfoItem>anime</SearchInfoItem>
+          <SearchInfoItem>books</SearchInfoItem>
+        </SearchInfoBox>
+      </SearchInfo>
+    )
+  }else {
+    return null;
+  }
+
+}
+
 const Header = (props) => {
-  return(
+  return (
     <HeaderWrapper>
       <Logo />
       <Nav>
@@ -19,12 +55,13 @@ const Header = (props) => {
             classNames="slide"
           >
             <NavSearch
-              className={props.focused ? 'focused': ''}
+              className={props.focused ? 'focused' : ''}
               onFocus={props.handleInputFocus}
               onBlur={props.handleInputBlur}
-            ></NavSearch>               
+            ></NavSearch>
           </CSSTransition>
-          <span className={props.focused ? 'focused iconfont': 'iconfont'}>&#xe6b7;</span>
+          <span className={props.focused ? 'focused iconfont' : 'iconfont'}>&#xe6b7;</span>
+          {showSearchInfoBox(props.focused)}
         </SearchWrapper>
         <NavItem className='right'><span className="iconfont">&#xe636;</span></NavItem>
         <NavItem className='right'>Login</NavItem>
@@ -35,7 +72,7 @@ const Header = (props) => {
           Write Blog
         </Btn>
         <Btn className='reg'>Register</Btn>
-        
+
       </Addition>
     </HeaderWrapper>
   );
