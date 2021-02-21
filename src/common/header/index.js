@@ -39,7 +39,10 @@ class Header extends Component {
         >
           <SearchInfoTitle>
             hot spot
-            <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage)}>switch</SearchInfoSwitch>
+            <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, this.spinIcon)}>
+              <span ref={(icon) => {this.spinIcon = icon}} className="iconfont spin">&#xe606;</span>
+              switch
+            </SearchInfoSwitch>
           </SearchInfoTitle>
           <SearchInfoBox>
            {pageList}
@@ -70,7 +73,7 @@ class Header extends Component {
                 onBlur={this.props.handleInputBlur}
               ></NavSearch>
             </CSSTransition>
-            <span className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe6b7;</span>
+            <span className={this.props.focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe6b7;</span>
             {this.showSearchInfoBox(this.props.focused)}
           </SearchWrapper>
           <NavItem className='right'><span className="iconfont">&#xe636;</span></NavItem>
@@ -119,7 +122,14 @@ const mapDispatchToProps = (dispatch) => {
     handleMouseLeave() {
       dispatch(actionCreators.mouseLeave());
     },
-    handleChangePage(page, totalPage) {
+    handleChangePage(page, totalPage, spin) {
+      let originAngle = spin.style.transform.replace(/[^0-9]/ig, '');
+      if (originAngle) {
+        originAngle = parseInt(originAngle, 10);           // change into decimal
+      }else {
+        originAngle = 0;
+      }
+      spin.style.transform = 'rotate(' + (originAngle + 360) + 'deg)';
       if (page < totalPage - 1) {
         dispatch(actionCreators.changePage(page + 1));
       }else {
