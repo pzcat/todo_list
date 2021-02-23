@@ -55,6 +55,7 @@ class Header extends Component {
   }
 
   render() {
+    const { focused, handleInputFocus, handleInputBlur, searchInfoList } = this.props
     return (
       <HeaderWrapper>
         <Logo />
@@ -63,18 +64,18 @@ class Header extends Component {
           <NavItem className='left'>Download</NavItem>
           <SearchWrapper>
             <CSSTransition
-              in={this.props.focused}
+              in={focused}
               timeout={200}
               classNames="slide"
             >
               <NavSearch
-                className={this.props.focused ? 'focused' : ''}
-                onFocus={this.props.handleInputFocus}
-                onBlur={this.props.handleInputBlur}
+                className={focused ? 'focused' : ''}
+                onFocus={() => handleInputFocus(searchInfoList)}
+                onBlur={handleInputBlur}
               ></NavSearch>
             </CSSTransition>
-            <span className={this.props.focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe6b7;</span>
-            {this.showSearchInfoBox(this.props.focused)}
+            <span className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe6b7;</span>
+            {this.showSearchInfoBox(focused)}
           </SearchWrapper>
           <NavItem className='right'><span className="iconfont">&#xe636;</span></NavItem>
           <NavItem className='right'>Login</NavItem>
@@ -108,10 +109,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleInputFocus() {
+    handleInputFocus(list) {
+      console.log(list);
+      (list.size === 0) && dispatch(actionCreators.getList());
       const action = actionCreators.searchFocus();
       dispatch(action);
-      dispatch(actionCreators.getList())
     },
     handleInputBlur() {
       dispatch(actionCreators.searchBlur());
